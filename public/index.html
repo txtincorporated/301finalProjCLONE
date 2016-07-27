@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Convoke</title>
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <base href="/">
+  <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="css/normalize.css">
+  <link rel="stylesheet" href="css/skeleton.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="/vendor/jqcloud.css">
+  <script id="guests" type="text/x-handlebars-template">
+    {{#each rsvp}}
+    <p class="{{css status}}">Guest: <b>{{userName}}</b> Status: <b>{{text status}}</b></p>
+    {{/each}}
+  </script>
+</head>
+
+<body>
+  <div class="table-container">
+    <div class="table-block footer-push">
+
+      <!-- minimalist top nav bar-->
+      <nav class="nav-main">
+        <div class="container">
+          <a href="/new">Convoke</a>
+        </div>
+      </nav>
+      <!--our main event page-->
+      <div class="container page" id="event">
+        <!--header that contains our event name, user name, attendance status-->
+        <div class="row">
+          <div class="six columns">
+            <h1 id="event-name">Event Name</h1>
+          </div>
+          <div class="three columns" style="margin-top:1%" id="user-id">
+
+            <h4 style="margin-top:10%">User Name</h4>
+          </div>
+          <div class="three columns blank" style="margin-top:1%" id="status">
+            <h4 class="noSelect" style="margin-top:10%">Going?</h4>
+          </div>
+          <span class="u-pull-right" id="status-instructions"> Click here to say so. </span>
+        </div>
+        <br>
+        <!--sub pages within our event page-->
+        <div class="row">
+          <nav class="u-pull-right" id="event-navigation">
+            <a class="button button-primary" href="/event">Event</a>
+            <a class="button button-primary" href="/event/timing">Timing</a>
+            <a class="button button-primary" href="./event/status/">Status</a>
+            <a class="button button-primary" href="./event/clusters/">Clusters</a>
+            <a class="button button-primary" href="./event/add/">+</a>
+          </nav>
+        </div>
+        <div class="row">
+          <!--new topic page for  new clusters-->
+          <div class="six columns" id="newClustersHere">
+            <!--where our users information gets rendered-->
+            <section class="page" id="status-content">
+              <h1>RSVP List</h1>
+              <div id="user-info"></div>
+            </section>
+            <!--Static cluster tab page-->
+            <section class="page" id="cluster">
+              <div id="cloud" class="row six columns"></div>
+              <div id="wordsy">
+                <form class="row" action="index.html" method="post">
+                  <input class="u-full-width" id="wdText" type="text" name="word" placeholder="Create Option">
+                  <input class="button-primary u-full-width" id="creator" type="button" name="submit" value="CREATE">
+                  <input type="text" visibility="hidden">
+                  <input type="text" id="topicHash" value="we09r20lksjdf">
+                </form>
+              </div>
+            </section>
+            <!--button which will add the new topic clusters-->
+            <section class="page" id="add">
+              <form class="row">
+                <input class="u-full-width" type="text" placeholder="Add a Topic" id="topic">
+                <input class="button-primary u-full-width" type="submit" value="Create Topic" id="add-topic">
+                <input class="button-primary u-full-width" type="submit" value="Clear Topics" id="clear-topic">
+              </form>
+            </section>
+            <!--this is our event details submission form which lives on the main event page for admin user-->
+            <section class="page" id="details">
+              <div class="twelve columns">
+                <form class="row" id="admin-input">
+                  <input class="u-full-width" type="text" placeholder="Once you've finalized the date, enter it here" id="date">
+                  <input class="u-full-width" type="text" placeholder="And when you've settled on the start time, put that here" id="times">
+                  <textarea class="u-full-width" type="text" placeholder="Any other datails you want to add, put them here." id="event-description"></textarea>
+                  <input class="button-primary u-full-width" type="submit" value="Submit" id="admin-input-button">
+                </form>
+                <!--url link to be shared with guests-->
+                <p> Share this link with your guests: </p>
+                <input class="u-full-width" type="text" readonly id="share-url">
+              </div>
+            </section>
+          </div>
+          <!--timing sub page which contains heat cluster chart-->
+          <section class="page twelve columns" id="timing">
+            <p>
+              <div id="container"></div>
+            </p>
+          </section>
+          <!--google address input and map that lives in multiple sub pages-->
+          <div class="six columns" id="googleAPI">
+            <form id="submit-event">
+              <input id="address" class="u-full-width" name="address" type="text" placeholder="Address">
+              <p> Tell your guests where it's at: </p>
+              <input class="button-primary u-full-width" type="submit" value="Submit">
+            </form>
+            <div id="map">
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--convoke homepage-->
+      <section class="container page" id="homepage">
+        <div style="margin-top: 15%">
+          <h1 class="center">Convoke</h1>
+          <br>
+          <br>
+          <br>
+          <form class="row" id="create-event">
+            <div class="eight columns">
+              <input class="u-full-width" type="text" placeholder="Event Name" id="event-value" autofocus required>
+            </div>
+            <div class="four columns">
+              <input class="button-primary u-full-width" type="submit" value="Create">
+            </div>
+          </form>
+        </div>
+      </section>
+      <!--convoke name input page-->
+      <section class="container page" id="name">
+        <div style="margin-top: 15%">
+          <h1 class="center">Enter Your Name</h1>
+          <br>
+          <br>
+          <br>
+          <form class="row" id="create-name">
+            <div class="eight columns">
+              <input class="u-full-width" type="text" placeholder="Your Name" id="name-value" autofocus required>
+            </div>
+            <div class="four columns">
+              <input class="button-primary u-full-width" type="submit" value="That's me!">
+            </div>
+          </form>
+        </div>
+      </section>
+    </div> <!-- end primary div.table-block -->
+
+    <!-- Page Footer Layout –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <div class="table-block">
+      <div>
+        <footer id="footer" class="twelve columns">
+          &copy; 2016 Team Sleep Deprived - <a href="https://github.com/GeoffreyEmerson/301-final-project">Check out our Github!</a>
+        </footer>
+      </div> <!-- end footer div.container -->
+    </div>  <!-- end footer div.table-block -->
+  </div>
+
+
+  <!-- Libraries -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0/handlebars.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/page.js/1.7.1/page.min.js"></script>
+  <script type="text/javascript" src="/vendor/jqcloud.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highcharts/4.2.5/highcharts.js"></script>
+  <script src="/vendor/heatmap.min.js"></script>
+  <!-- <script src="/vendor/noSelect.js"></script> -->
+
+  <!-- Custom Scripts -->
+  <script type="text/javascript" src="/js/create-view.js"></script>
+  <script type="text/javascript" src="/js/create-controller.js"></script>
+  <script type="text/javascript" src="/js/user-model.js"></script>
+  <script type="text/javascript" src="/js/user-controller.js"></script>
+  <script type="text/javascript" src="/js/name-view.js"></script>
+  <script type="text/javascript" src="/js/name-controller.js"></script>
+  <script type="text/javascript" src="/js/topic-model.js"></script>
+  <script type="text/javascript" src="/js/topic-view.js"></script>
+  <script type="text/javascript" src="/js/topic-controller.js"></script>
+  <script type="text/javascript" src="/js/event-model.js"></script>
+  <script type="text/javascript" src="/js/event-view.js"></script>
+  <script type="text/javascript" src="/js/event-controller.js"></script>
+  <script type="text/javascript" src="/js/calendar-view.js"></script>
+  <script type="text/javascript" src="/js/session-controller.js"></script>
+  <script type="text/javascript" src="/js/routes.js"></script>
+
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyANkSpMspmZgzuktghs8xN3M9sBrQnZ-Ng&callback=EventView.initMap" async defer></script>
+</body>
+
+</html>
