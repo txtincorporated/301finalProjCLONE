@@ -2,6 +2,8 @@
 
 ## Code Fellows 301 Final Project
 
+###NOTE that this is a clone of the original project with an image added for portfolio inclusion; otherwise it is identical to the project as currently deployed.
+
 Team name: Team Sleep Deprived  
 Team members: Geoffrey Emerson, Charles Emrich, Nathan Keene, Curt Newcomer
 
